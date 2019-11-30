@@ -1,14 +1,20 @@
 package com.devendra_saroj.finduser.controller;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.devendra_saroj.finduser.R;
 
 
@@ -26,13 +32,20 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    Context mContext;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
+    TextView summary, repoCount;
+    android.widget.Toolbar mActionBarToolBar;
+    ImageView imageView;
+
+
     public ProfileFragment() {
+//        mContext = context;
         // Required empty public constructor
     }
 
@@ -60,15 +73,43 @@ public class ProfileFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+
+        View rootview = inflater.inflate(R.layout.fragment_profile, container, false);
+        summary = (TextView) rootview.findViewById(R.id.summary);
+        repoCount = (TextView) rootview.findViewById(R.id.repo_count);
+        imageView = (ImageView) rootview.findViewById(R.id.image);
+
+        String Summary = getActivity().getIntent().getExtras().getString("login");
+        String RepoCount = getActivity().getIntent().getExtras().getString("html_url");
+        String Image = getActivity().getIntent().getExtras().getString("avatar_url");
+
+        repoCount.setText(RepoCount);
+        Linkify.addLinks(repoCount, Linkify.WEB_URLS);
+
+        summary.setText(Summary);
+        Glide.with(getContext())
+                .load(Image)
+                .placeholder(R.drawable.ic_cached_black_24dp)
+                .into(imageView);
+
+
+
+
+        return rootview;
     }
+
+//    private Intent createShareForecastIntent() {
+//
+//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -106,6 +147,7 @@ public class ProfileFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
+
         void onFragmentInteraction(Uri uri);
     }
 }

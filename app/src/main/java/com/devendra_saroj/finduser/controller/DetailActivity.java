@@ -5,6 +5,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.devendra_saroj.finduser.R;
 import com.google.android.material.tabs.TabLayout;
@@ -16,6 +18,8 @@ public class DetailActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     PageAdapter pageAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,5 +35,7 @@ public class DetailActivity extends AppCompatActivity {
         pageAdapter.addFragment(new RepoFragment(), "Repo");
 
         viewPager.setAdapter(pageAdapter);
+
+
     }
 }
